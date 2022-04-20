@@ -24,3 +24,7 @@ class Car:
     def show_car(self):
         print(f'looking for car #{self.car_id} in dealer office')
         return requests.get(self.url).json()
+
+    def delete_car(self):
+        print(f'deleting car #{self.car_id} from dealer list')
+        requests.delete(self.url).json()

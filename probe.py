@@ -1,12 +1,13 @@
 from pprint import pprint
 import requests
-
 from vehicle import Car
+
+BASE = 'http://127.0.0.1:5000/vehicle/'
 
 
 def show_all_cars():
     print('show all cars')
-    pprint(requests.get(BASE + '0').json())
+    pprint(requests.get('http://127.0.0.1:5000/vehicle/0').json())
 
 
 cars = [Car(car_id=1, brand='Chevrolet', color='black', price='25000'),
@@ -19,13 +20,16 @@ cars = [Car(car_id=1, brand='Chevrolet', color='black', price='25000'),
 
 for car in cars:
     car.add_car_to_dealer()
-    # print(car.show_car())
 
-BASE = 'http://127.0.0.1:5000/vehicle/'
-cars_list = BASE + 'cars'
+car99 = Car(car_id=99, brand='Tesla')
+car99.add_car_to_dealer()
 
-# req_put = requests.put(BASE + '5', {'brand': 'RangeRover', 'color': 'gold', 'price': '60000'})
-# pprint(req_put.json())
-# pprint(requests.get(BASE + '2').json())
 show_all_cars()
-# pprint(requests.post(cars_list).json())
+
+car_id_to_delete = 1
+pprint(requests.delete(f'{BASE}{car_id_to_delete}').json())
+
+car_to_modify = 3
+pprint(requests.put(f'{BASE}{car_to_modify}', {'price': 61000}).json())
+
+show_all_cars()
