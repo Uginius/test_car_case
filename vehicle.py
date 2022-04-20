@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
 
 
 # put_car_args = reqparse.RequestParser()
@@ -11,13 +11,10 @@ from flask_restful import Resource, reqparse
 class Vehicle(Resource):
     def __init__(self):
         self.cars = {1: {'brand': 'chevrolet', 'color': 'black', 'price': 5000},
-                     2: {'brand': 'geely', 'color': 'gray', 'price': 12000},
+                     2: {'brand': 'ford', 'color': 'gray', 'price': 12000},
                      3: {'brand': 'kia', 'color': 'red', 'price': 10000}}
 
-    def get(self):
-        # return self.cars if car_id == 'cars' else self.cars[car_id]
-        return {'data': self.cars}
+    def get(self, car_id):
+        # return {'cars': self.cars} if name == 'cars' else {name: self.cars[name]}
+        return {car_id: self.cars[car_id]}
 
-    def post(self):
-        # return self.cars if car_id == 'cars' else self.cars[car_id]
-        return {'data': 'posted'}

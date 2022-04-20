@@ -15,7 +15,7 @@ from vehicle import Vehicle
 
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(Vehicle, '/cars')
+api.add_resource(Vehicle, '/cars/<int:car_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
