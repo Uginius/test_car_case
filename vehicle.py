@@ -1,28 +1,26 @@
+import requests
 from flask import request
-from flask_restful import Resource
 
 
-# put_car_args = reqparse.RequestParser()
-# put_car_args.add_argument('brand', type=str, help='car brand', required=True)
-# put_car_args.add_argument('color', type=str, help='car color', required=True)
-# put_car_args.add_argument('price', type=int, help='car price', required=True)
+def form_get(el):
+    return request.form.get(el)
 
-# args = put_car_args.parse_args()
 
-class Vehicle(Resource):
-    def __init__(self):
-        self.cars = {1: {'brand': 'chevrolet', 'color': 'black', 'price': 5000},
-                     2: {'brand': 'ford', 'color': 'gray', 'price': 12000},
-                     3: {'brand': 'kia', 'color': 'red', 'price': 10000}}
+class Car:
+    def __init__(self, car_id, brand=None, color=None, price=None):
+        self.car_id = car_id
+        self.brand = brand
+        self.color = color
+        self.price = price
+        self.url = f'http://127.0.0.1:5000/vehicle/{car_id}'
 
-    def get(self, car_id):
-        # return {'cars': self.cars} if name == 'cars' else {name: self.cars[name]}
-        return {car_id: self.cars[car_id]}
+    def properties(self):
+        return {'brand': self.brand, 'color': self.color, 'price': self.price}
 
-    def put(self, car_id):
-        new_car = {'brand': request.form['brand'],
-                   'color': request.form['color'],
-                   'price': request.form['price'],
-                   }
-        self.cars[car_id] = new_car
-        return {car_id: new_car}
+    def add_car_to_dealer(self):
+        print(f'adding car #{self.car_id}')
+        requests.put(self.url, self.properties())
+
+    def show_car(self):
+        print(f'looking for car #{self.car_id} in dealer office')
+        return requests.get(self.url).json()

@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from vehicle import Vehicle
+from dealer import Dealer
 
 # 1. Создать небольшое REST API на Python (можно использовать любые библиотеки и framework-и, в т.ч. Flask).
 
@@ -15,7 +15,7 @@ from vehicle import Vehicle
 
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(Vehicle, '/vehicle/<int:car_id>')
+api.add_resource(Dealer, '/vehicle/<int:car_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
