@@ -3,9 +3,13 @@ from pprint import pprint
 from flask import request
 from flask_restful import Resource
 
-cars = {1: {'brand': 'chevrolet', 'color': 'black', 'price': 5000},
-        2: {'brand': 'ford', 'color': 'gray', 'price': 12000},
-        3: {'brand': 'kia', 'color': 'red', 'price': 10000}}
+from vehicle import Car
+
+cars = {}
+
+
+def form_get(el):
+    return request.form.get(el)
 
 
 class Dealer(Resource):
@@ -19,9 +23,6 @@ class Dealer(Resource):
         return {car_id: try_dict}
 
     def put(self, car_id):
-        new_car = {'brand': request.form['brand'],
-                   'color': request.form['color'],
-                   'price': request.form['price'],
-                   }
-        cars[car_id] = new_car
-        return {car_id: new_car}
+        car = Car(car_id, brand=form_get('brand'), color=form_get('color'), price=form_get('price'))
+        cars[car_id] = car.properties()
+        return {car_id: cars[car_id]}, 201
