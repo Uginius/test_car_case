@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import Resource
 
 
@@ -18,3 +19,10 @@ class Vehicle(Resource):
         # return {'cars': self.cars} if name == 'cars' else {name: self.cars[name]}
         return {car_id: self.cars[car_id]}
 
+    def put(self, car_id):
+        new_car = {'brand': request.form['brand'],
+                   'color': request.form['color'],
+                   'price': request.form['price'],
+                   }
+        self.cars[car_id] = new_car
+        return {car_id: new_car}
